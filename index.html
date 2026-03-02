@@ -3,116 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eng Market | المنصة الهندسية الشاملة</title>
+    <title>Eng Market | سوق المهندسين</title>
     <style>
-        :root { --primary: #0d1b2a; --brand: #c5a059; --bg: #f4f7f9; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; transition: 0.3s; }
+        :root { --navy: #0d1b2a; --gold: #c5a059; --light-bg: #f8f9fa; --card-white: #ffffff; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--light-bg); color: var(--navy); padding-bottom: 70px; }
         
-        /* إخفاء شريط جوجل الافتراضي العلوي */
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
-        body { top: 0px !important; }
+        /* الهيدر وزر اللغة */
+        header { background: var(--navy); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold); }
+        .logo { color: var(--gold); font-weight: bold; font-size: 1.4rem; text-decoration: none; }
+        #translate-btn { background: var(--gold); color: var(--navy); border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-        header { background: var(--primary); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--brand); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 1.6rem; font-weight: 900; color: var(--brand); text-decoration: none; }
+        /* منطقة البحث */
+        .hero { background: var(--navy); color: white; text-align: center; padding: 40px 20px; }
+        .search-box { max-width: 600px; margin: -25px auto 20px; padding: 0 15px; }
+        #mainSearch { width: 100%; padding: 15px; border-radius: 30px; border: 1px solid #ccc; box-shadow: 0 4px 10px rgba(0,0,0,0.1); outline: none; font-size: 1rem; }
+
+        /* قائمة الشركات */
+        .container { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: var(--card-white); border-radius: 15px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .category-tag { color: var(--gold); font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; display: block; }
+        .card h3 { margin: 5px 0; font-size: 1.2rem; }
+        .card p { font-size: 0.9rem; color: #555; line-height: 1.5; height: 45px; overflow: hidden; }
         
-        /* زر اللغة الجديد */
-        .lang-container { background: var(--brand); color: var(--primary); padding: 5px 10px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-        #google_translate_element { display: none; } /* نخفي الأداة الأصلية ونشغلها بالزر الخاص بنا */
-
-        .hero { width: 100%; height: 250px; background: #000 url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?w=800') center/cover; display: flex; align-items: center; justify-content: center; position: relative; }
-        .hero h2 { color: var(--brand); text-align: center; z-index: 2; text-shadow: 2px 2px 10px #000; padding: 0 20px; }
-
-        .search-area { background: var(--white); padding: 20px 5%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        #mainSearch { width: 100%; padding: 14px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; outline: none; box-sizing: border-box; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px 5%; }
-        .card { background: var(--white); border-radius: 12px; padding: 20px; border: 1px solid #eee; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .card h3 { margin: 10px 0; color: var(--primary); }
-        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
-        .btn { flex: 1; padding: 10px; text-align: center; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        /* أزرار التواصل */
+        .actions { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { flex: 1; padding: 10px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
         .btn-wa { background: #25d366; color: white; }
-        .btn-call { background: var(--primary); color: white; }
+        .btn-call { background: var(--navy); color: white; }
 
         /* شريط التنقل السفلي */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--primary); display: flex; justify-content: space-around; padding: 12px 0; border-top: 2px solid var(--brand); z-index: 2000; }
-        .nav-item { color: white; text-decoration: none; text-align: center; font-size: 0.8rem; }
-        .nav-item i { display: block; font-size: 1.4rem; margin-bottom: 4px; }
+        .nav-bottom { position: fixed; bottom: 0; width: 100%; background: var(--navy); display: flex; justify-content: space-around; padding: 12px 0; border-top: 2px solid var(--gold); }
+        .nav-link { color: white; text-decoration: none; font-size: 0.8rem; text-align: center; }
+
+        /* إخفاء شريط جوجل المزعج */
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0px !important; }
+        #google_translate_element { display: none; }
     </style>
 </head>
 <body>
 
 <header>
     <a href="#" class="logo">ENG MARKET</a>
-    <div class="lang-container" onclick="triggerGoogleTranslate()">
-        🌐 <span id="langText">English</span>
-    </div>
+    <button id="translate-btn" onclick="toggleLanguage()">English</button>
 </header>
+
+<div class="hero">
+    <h2 id="hero-title">أسعار مواد البناء والخدمات الهندسية</h2>
+</div>
+
+<div class="search-box">
+    <input type="text" id="mainSearch" placeholder="ابحث عن شركة، مصنع، أو خدمة..." onkeyup="filterCompanies()">
+</div>
 
 <div id="google_translate_element"></div>
 
-<div class="hero">
-    <h2>أسعار مواد البناء والخدمات الهندسية لحظة بلحظة</h2>
-</div>
-
-<div class="search-area">
-    <input type="text" id="mainSearch" onkeyup="search()" placeholder="ابحث عن شركة، مصنع، أو خدمة...">
-</div>
-
-<div class="grid" id="companyGrid">
+<div class="container" id="companiesGrid">
     </div>
 
-<div class="bottom-nav">
-    <a href="#" class="nav-item">🏠<br>الرئيسية</a>
-    <a href="https://wa.me/96170822806" class="nav-item">👤<br>حسابي</a>
-    <a href="tel:96170822806" class="nav-item">📞<br>اتصل بنا</a>
+<div class="nav-bottom">
+    <a href="#" class="nav-link">🏠<br>الرئيسية</a>
+    <a href="tel:96170822806" class="nav-link">📞<br>اتصل بنا</a>
+    <a href="https://wa.me/96170822806" class="nav-link">💬<br>واتساب</a>
 </div>
 
 <script>
-    const companies = [
-        { n: "ميتالكو للحديد", c: "حديد بناء", l: "بيروت", p: "96103761784", d: "مورد أساسي لكافة قياسات الحديد بجودة عالمية." },
-        { n: "المقاولون اللبنانيون", c: "باطون جاهز", l: "الجنوب", p: "96170822806", d: "خدمات صب وخلط الباطون بأحدث المعدات." },
-        { n: "تكنو لايت للكهرباء", c: "أنظمة طاقة", l: "الشمال", p: "96101000000", d: "متخصصون في الطاقة الشمسية والتمديدات الكهربائية." }
+    const data = [
+        { name: "ميتالكو للحديد", cat: "حديد بناء", loc: "بيروت", phone: "96103761784", desc: "توفير كافة أنواع حديد التسليح والجسور بأفضل الأسعار." },
+        { name: "تكنو لايت", cat: "طاقة شمسية", loc: "الشمال", phone: "96170822806", desc: "حلول الطاقة المتجددة وتجهيز المشاريع الهندسية." },
+        { name: "خشب الجنوب", cat: "تجارة أخشاب", loc: "صيدا", phone: "96170822806", desc: "استيراد وتوريد كافة أنواع الخشب للمقاولات." },
+        { name: "باطون لبنان", cat: "باطون جاهز", loc: "جبل لبنان", phone: "96170822806", desc: "صب باطون جاهز مع فحوصات مخبرية دقيقة." }
     ];
 
-    function render(data) {
-        document.getElementById('companyGrid').innerHTML = data.map(c => `
+    function display(items) {
+        const grid = document.getElementById('companiesGrid');
+        grid.innerHTML = items.map(i => `
             <div class="card">
-                <small style="color:var(--brand)">📍 ${c.l} | ${c.c}</small>
-                <h3>${c.n}</h3>
-                <p style="font-size:0.85rem; color:#666;">${c.d}</p>
-                <div class="btn-group">
-                    <a href="tel:${c.p}" class="btn btn-call">اتصال</a>
-                    <a href="https://wa.me/${c.p}" class="btn btn-wa">واتساب</a>
+                <span class="category-tag">📍 ${i.loc} | ${i.cat}</span>
+                <h3>${i.name}</h3>
+                <p>${i.desc}</p>
+                <div class="actions">
+                    <a href="tel:${i.phone}" class="btn btn-call">اتصال</a>
+                    <a href="https://wa.me/${i.phone}" class="btn btn-wa">واتساب</a>
                 </div>
             </div>
         `).join('');
     }
 
-    function search() {
-        const val = document.getElementById('mainSearch').value.toLowerCase();
-        render(companies.filter(c => c.n.includes(val) || c.c.includes(val)));
+    function filterCompanies() {
+        const term = document.getElementById('mainSearch').value.toLowerCase();
+        const filtered = data.filter(i => i.name.includes(term) || i.cat.includes(term));
+        display(filtered);
     }
 
-    // تشغيل ترجمة جوجل
+    // نظام الترجمة
     function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'ar',
-            includedLanguages: 'en,ar',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
+        new google.translate.TranslateElement({pageLanguage: 'ar', includedLanguages: 'en,ar'}, 'google_translate_element');
     }
 
-    function triggerGoogleTranslate() {
+    function toggleLanguage() {
         const select = document.querySelector('.goog-te-combo');
         if (select) {
-            const currentLang = document.getElementById('langText').innerText;
-            select.value = currentLang === 'English' ? 'en' : 'ar';
+            const btn = document.getElementById('translate-btn');
+            if (btn.innerText === "English") {
+                select.value = 'en';
+                btn.innerText = "العربية";
+            } else {
+                select.value = 'ar';
+                btn.innerText = "English";
+            }
             select.dispatchEvent(new Event('change'));
-            document.getElementById('langText').innerText = currentLang === 'English' ? 'العربية' : 'English';
         }
     }
 
-    window.onload = () => render(companies);
+    window.onload = () => display(data);
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
