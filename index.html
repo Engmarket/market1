@@ -3,224 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eng Market | Global Master</title>
+    <title>Eng Market | المنصة الهندسية الشاملة</title>
     <style>
-        /* 1. التنسيق الأساسي */
         :root { --primary: #0d1b2a; --brand: #c5a059; --bg: #f4f7f9; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: var(--primary); transition: 0.3s; padding-bottom: 80px; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; transition: 0.3s; }
         
-        /* الوضع الليلي */
-        body.dark-theme { background: #050a0f; color: #e0e0e0; }
-        body.dark-theme .card, body.dark-theme .search-area, body.dark-theme .market-status, body.dark-theme .ad-request-section, body.dark-theme .eng-calc {
-            background: #0d1b2a; border-color: #1b263b; color: white;
-        }
+        /* إخفاء شريط جوجل الافتراضي العلوي */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
 
-        /* 2. الهيدر */
         header { background: var(--primary); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--brand); position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 1.6rem; font-weight: 900; color: var(--brand); text-decoration: none; }
-        .lang-btn { background: var(--brand); color: var(--primary); border: none; padding: 8px 16px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        
+        /* زر اللغة الجديد */
+        .lang-container { background: var(--brand); color: var(--primary); padding: 5px 10px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        #google_translate_element { display: none; } /* نخفي الأداة الأصلية ونشغلها بالزر الخاص بنا */
 
-        /* 3. السلايدر */
-        .hero { width: 100%; height: 320px; position: relative; overflow: hidden; background: #000; }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 1s; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
-        .slide.active { opacity: 0.6; }
-        .slide h2 { color: var(--brand); font-size: 1.8rem; text-align: center; text-shadow: 2px 2px 10px #000; padding: 20px; }
+        .hero { width: 100%; height: 250px; background: #000 url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?w=800') center/cover; display: flex; align-items: center; justify-content: center; position: relative; }
+        .hero h2 { color: var(--brand); text-align: center; z-index: 2; text-shadow: 2px 2px 10px #000; padding: 0 20px; }
 
-        /* 4. شريط الإعلانات */
-        .ad-bar { background: var(--brand); color: var(--primary); padding: 8px 0; font-weight: bold; overflow: hidden; white-space: nowrap; }
-        .ad-track { display: inline-block; animation: scroll 20s linear infinite; }
-        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
-
-        /* 5. البحث والفلترة */
         .search-area { background: var(--white); padding: 20px 5%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         #mainSearch { width: 100%; padding: 14px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; outline: none; box-sizing: border-box; }
-        .tabs { display: flex; overflow-x: auto; gap: 10px; padding: 15px 0; scrollbar-width: none; }
-        .tab { padding: 8px 20px; background: #eee; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap; }
-        .tab.active { background: var(--brand); color: white; }
 
-        /* 6. شريط الأيقونات */
-        .ribbon { display: flex; overflow-x: auto; gap: 20px; padding: 20px 5%; background: var(--white); border-bottom: 1px solid #ddd; scrollbar-width: none; }
-        .icon-item { flex: 0 0 auto; text-align: center; width: 85px; cursor: pointer; }
-        .icon-circle { width: 65px; height: 65px; background: var(--white); border: 2.5px solid var(--brand); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 8px; box-shadow: 0 4px 12px rgba(197,160,89,0.25); transition: 0.3s; }
-        .icon-item:hover .icon-circle { transform: scale(1.1); background: var(--brand); color: white; }
-
-        /* 7. الشبكة والبطاقات */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 30px 5%; }
-        .card { background: var(--white); border-radius: 15px; padding: 25px; border: 1px solid #eee; position: relative; transition: 0.3s; }
-        .verified { position: absolute; top: 15px; left: 15px; background: #27ae60; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
-        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .btn { padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        .btn-call { background: var(--primary); color: white; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px 5%; }
+        .card { background: var(--white); border-radius: 12px; padding: 20px; border: 1px solid #eee; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .card h3 { margin: 10px 0; color: var(--primary); }
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { flex: 1; padding: 10px; text-align: center; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
         .btn-wa { background: #25d366; color: white; }
+        .btn-call { background: var(--primary); color: white; }
 
-        /* 8. حالة السوق والحاسبة */
-        .market-status, .eng-calc, .ad-request-section, .tenders-board { margin: 20px 5%; padding: 25px; border-radius: 15px; background: var(--white); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .market-item { background: #f9f9f9; padding: 10px; border-radius: 8px; text-align: center; }
-        .calc-box { display: flex; gap: 10px; margin-top: 10px; }
-        .calc-box input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        
-        /* 9. شريط التنقل السفلي الثابت */
-        .fixed-footer-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #000; height: 70px; display: flex; justify-content: space-around; align-items: center; border-top: 2px solid var(--brand); z-index: 2000; }
-        .footer-nav-item { color: #fff; text-decoration: none; text-align: center; flex: 1; font-size: 11px; }
-        .footer-nav-item .icon { font-size: 20px; display: block; }
+        /* شريط التنقل السفلي */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--primary); display: flex; justify-content: space-around; padding: 12px 0; border-top: 2px solid var(--brand); z-index: 2000; }
+        .nav-item { color: white; text-decoration: none; text-align: center; font-size: 0.8rem; }
+        .nav-item i { display: block; font-size: 1.4rem; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
 <header>
     <a href="#" class="logo">ENG MARKET</a>
-    <button class="lang-btn" onclick="toggleLang()" id="langBtn">English</button>
+    <div class="lang-container" onclick="triggerGoogleTranslate()">
+        🌐 <span id="langText">English</span>
+    </div>
 </header>
 
-<div class="hero" id="slider"></div>
+<div id="google_translate_element"></div>
 
-<div class="ad-bar">
-    <div class="ad-track" id="adTrackText">📢 إعلان: شركة 'ميتالكو' تقدم خصومات خاصة للمهندسين المسجلين عبر منصتنا - تواصل معنا للإعلان هنا 📢</div>
+<div class="hero">
+    <h2>أسعار مواد البناء والخدمات الهندسية لحظة بلحظة</h2>
 </div>
 
 <div class="search-area">
-    <input type="text" id="mainSearch" onkeyup="doSearch()" placeholder="ابحث عن شركة، خدمة، أو اختصاص...">
-    <div class="tabs" id="locTabs">
-        <button class="tab active" onclick="filterLoc('الكل', this)">كل لبنان</button>
-        <button class="tab" onclick="filterLoc('بيروت', this)">بيروت</button>
-        <button class="tab" onclick="filterLoc('الشمال', this)">الشمال</button>
-        <button class="tab" onclick="filterLoc('الجنوب', this)">الجنوب</button>
+    <input type="text" id="mainSearch" onkeyup="search()" placeholder="ابحث عن شركة، مصنع، أو خدمة...">
+</div>
+
+<div class="grid" id="companyGrid">
     </div>
-</div>
 
-<div class="ribbon" id="categoryRibbon"></div>
-
-<div class="market-status">
-    <h3 id="marketTitle">📊 حالة السوق اليوم</h3>
-    <div class="market-grid">
-        <div class="market-item"><span id="ironLabel">طن الحديد</span> <b id="ironPrice">$610</b></div>
-        <div class="market-item"><span id="concreteLabel">متر الباطون</span> <b id="concretePrice">$85</b></div>
-    </div>
-</div>
-
-<div class="grid" id="companyGrid"></div>
-
-<div class="eng-calc">
-    <h3 id="calcTitle">🧮 حاسبة كمية الباطون</h3>
-    <div class="calc-box">
-        <input type="number" id="area" placeholder="المساحة م2">
-        <input type="number" id="depth" placeholder="السمك سم">
-        <button class="btn-call btn" style="border:none; cursor:pointer" onclick="calculateConcrete()">احسب</button>
-    </div>
-    <p id="calcResult" style="text-align:center; font-weight:bold; color:var(--brand);"></p>
-</div>
-
-<div class="ad-request-section" id="adPortal">
-    <h3 id="adTitle">🖼️ طلب إعلان أو انضمام</h3>
-    <input type="text" id="compName" placeholder="اسم الشركة" style="width:100%; padding:10px; margin-bottom:10px;">
-    <button class="btn-wa btn" style="width:100%; border:none; cursor:pointer" onclick="sendAdToManager()">إرسال عبر واتساب</button>
-</div>
-
-<div class="fixed-footer-bar">
-    <a href="#" class="footer-nav-item">
-        <span class="icon">🏠</span>
-        <span class="label" id="labelHome">الرئيسية</span>
-    </a>
-    <a href="https://wa.me/96170822806" class="footer-nav-item">
-        <span class="icon">👤</span>
-        <span class="label" id="labelAccount">حسابي</span>
-    </a>
-    <a href="#adPortal" class="footer-nav-item">
-        <span class="icon">📝</span>
-        <span class="label" id="labelOrders">طلباتي</span>
-    </a>
-    <a href="javascript:void(0)" onclick="toggleDarkMode()" class="footer-nav-item">
-        <span class="icon">🌙</span>
-        <span class="label" id="labelMode">الوضع الليلي</span>
-    </a>
+<div class="bottom-nav">
+    <a href="#" class="nav-item">🏠<br>الرئيسية</a>
+    <a href="https://wa.me/96170822806" class="nav-item">👤<br>حسابي</a>
+    <a href="tel:96170822806" class="nav-item">📞<br>اتصل بنا</a>
 </div>
 
 <script>
     const companies = [
-        { n: "ميتالكو ستيل", c: "حديد", l: "بيروت", p: "96103761784", d: "حديد بناء مبروم قياسات عالمية.", v: true, r: 5 },
-        { n: "صقر الشمال", c: "خشب", l: "الشمال", p: "96103000000", d: "أخشاب سويدية وزان طبيعي.", v: true, r: 4 },
-        { n: "تكنو طاقة", c: "طاقة", l: "الجنوب", p: "96107000000", d: "أنظمة طاقة شمسية ذكية.", v: true, r: 5 }
+        { n: "ميتالكو للحديد", c: "حديد بناء", l: "بيروت", p: "96103761784", d: "مورد أساسي لكافة قياسات الحديد بجودة عالمية." },
+        { n: "المقاولون اللبنانيون", c: "باطون جاهز", l: "الجنوب", p: "96170822806", d: "خدمات صب وخلط الباطون بأحدث المعدات." },
+        { n: "تكنو لايت للكهرباء", c: "أنظمة طاقة", l: "الشمال", p: "96101000000", d: "متخصصون في الطاقة الشمسية والتمديدات الكهربائية." }
     ];
-
-    const cats = [
-        {n:"حديد", i:"🏗️"}, {n:"باطون", i:"🚚"}, {n:"خشب", i:"🪵"}, {n:"طاقة", i:"☀️"}, {n:"كهرباء", i:"💡"}
-    ];
-
-    const slides = [
-        { t: "أكبر تجمع للموردين في لبنان", img: "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?w=800" },
-        { t: "أسعار مواد البناء لحظة بلحظة", img: "https://images.unsplash.com/photo-1503387762-592dee58c460?w=800" }
-    ];
-
-    function init() {
-        const s = document.getElementById('slider');
-        s.innerHTML = slides.map((sl, i) => `<div class="slide ${i===0?'active':''}" style="background-image:url('${sl.img}')"><h2>${sl.t}</h2></div>`).join('');
-        
-        const rb = document.getElementById('categoryRibbon');
-        rb.innerHTML = cats.map(c => `<div class="icon-item" onclick="filterCat('${c.n}')"><div class="icon-circle">${c.i}</div><span>${c.n}</span></div>`).join('');
-        
-        render(companies);
-        setInterval(() => {
-            const slidesArr = document.querySelectorAll('.slide');
-            let active = document.querySelector('.slide.active');
-            active.classList.remove('active');
-            (active.nextElementSibling || slidesArr[0]).classList.add('active');
-        }, 4000);
-    }
 
     function render(data) {
-        const grid = document.getElementById('companyGrid');
-        grid.innerHTML = data.map(c => `
+        document.getElementById('companyGrid').innerHTML = data.map(c => `
             <div class="card">
-                ${c.v ? '<span class="verified">موثق ✓</span>' : ''}
-                <div class="card-loc">📍 ${c.l} | ${c.c}</div>
-                <h3 class="card-title">${c.n}</h3>
+                <small style="color:var(--brand)">📍 ${c.l} | ${c.c}</small>
+                <h3>${c.n}</h3>
                 <p style="font-size:0.85rem; color:#666;">${c.d}</p>
-                <div class="actions">
+                <div class="btn-group">
                     <a href="tel:${c.p}" class="btn btn-call">اتصال</a>
                     <a href="https://wa.me/${c.p}" class="btn btn-wa">واتساب</a>
                 </div>
-            </div>`).join('');
+            </div>
+        `).join('');
     }
 
-    function doSearch() {
+    function search() {
         const val = document.getElementById('mainSearch').value.toLowerCase();
-        render(companies.filter(c => c.n.toLowerCase().includes(val) || c.c.includes(val)));
+        render(companies.filter(c => c.n.includes(val) || c.c.includes(val)));
     }
 
-    function filterLoc(loc, btn) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-        render(loc === 'الكل' ? companies : companies.filter(c => c.l === loc));
+    // تشغيل ترجمة جوجل
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'ar',
+            includedLanguages: 'en,ar',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
     }
 
-    function calculateConcrete() {
-        const a = document.getElementById('area').value;
-        const d = document.getElementById('depth').value;
-        if(a && d) document.getElementById('calcResult').innerText = `الكمية: ${(a*(d/100)).toFixed(2)} م3`;
+    function triggerGoogleTranslate() {
+        const select = document.querySelector('.goog-te-combo');
+        if (select) {
+            const currentLang = document.getElementById('langText').innerText;
+            select.value = currentLang === 'English' ? 'en' : 'ar';
+            select.dispatchEvent(new Event('change'));
+            document.getElementById('langText').innerText = currentLang === 'English' ? 'العربية' : 'English';
+        }
     }
 
-    function toggleDarkMode() {
-        document.body.classList.toggle('dark-theme');
-    }
-
-    function toggleLang() {
-        const doc = document.documentElement;
-        const isAr = doc.dir === 'rtl';
-        doc.dir = isAr ? 'ltr' : 'rtl';
-        doc.lang = isAr ? 'en' : 'ar';
-        document.getElementById('langBtn').innerText = isAr ? 'العربية' : 'English';
-        
-        // تغيير النصوص
-        document.getElementById('mainSearch').placeholder = isAr ? "Search companies..." : "ابحث عن شركة...";
-        document.getElementById('labelHome').innerText = isAr ? "Home" : "الرئيسية";
-        document.getElementById('labelAccount').innerText = isAr ? "Account" : "حسابي";
-        document.getElementById('labelOrders').innerText = isAr ? "Orders" : "طلباتي";
-        document.getElementById('marketTitle').innerText = isAr ? "📊 Market Status" : "📊 حالة السوق اليوم";
-    }
-
-    window.onload = init;
+    window.onload = () => render(companies);
 </script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
