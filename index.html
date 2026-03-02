@@ -3,42 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eng Market | سوق المهندسين</title>
+    <title>Eng Market Pro | المنصة الهندسية المتكاملة</title>
     <style>
-        :root { --navy: #0d1b2a; --gold: #c5a059; --light-bg: #f8f9fa; --card-white: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--light-bg); color: var(--navy); padding-bottom: 70px; }
+        :root { --navy: #0d1b2a; --gold: #c5a059; --bg: #f4f7f9; --white: #ffffff; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; }
         
-        /* الهيدر وزر اللغة */
-        header { background: var(--navy); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold); }
-        .logo { color: var(--gold); font-weight: bold; font-size: 1.4rem; text-decoration: none; }
-        #translate-btn { background: var(--gold); color: var(--navy); border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        /* الهيدر */
+        header { background: var(--navy); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
+        .logo { color: var(--gold); font-size: 1.6rem; font-weight: 900; text-decoration: none; }
+        .lang-btn { background: var(--gold); color: var(--navy); border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+
+        /* بورصة الأسعار اليومية (مثل IndiaMart) */
+        .ticker-wrap { background: #e9ecef; padding: 10px 0; border-bottom: 1px solid #ddd; overflow: hidden; }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 30s linear infinite; }
+        .ticker-item { margin: 0 20px; font-size: 0.9rem; font-weight: bold; color: var(--navy); }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* منطقة البحث */
-        .hero { background: var(--navy); color: white; text-align: center; padding: 40px 20px; }
-        .search-box { max-width: 600px; margin: -25px auto 20px; padding: 0 15px; }
-        #mainSearch { width: 100%; padding: 15px; border-radius: 30px; border: 1px solid #ccc; box-shadow: 0 4px 10px rgba(0,0,0,0.1); outline: none; font-size: 1rem; }
+        .hero { background: var(--navy); padding: 40px 5%; text-align: center; color: white; }
+        .search-box { max-width: 700px; margin: -30px auto 20px; position: relative; padding: 0 15px; }
+        #mainSearch { width: 100%; padding: 18px 25px; border-radius: 50px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-size: 1.1rem; outline: none; }
+
+        /* الأقسام (تصميم أيقونات Olx) */
+        .categories { display: flex; overflow-x: auto; padding: 20px 5%; gap: 15px; background: white; }
+        .cat-card { min-width: 100px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .cat-card:hover { color: var(--gold); transform: scale(1.1); }
+        .cat-icon { font-size: 2rem; display: block; margin-bottom: 5px; }
 
         /* قائمة الشركات */
-        .container { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: var(--card-white); border-radius: 15px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .category-tag { color: var(--gold); font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; display: block; }
-        .card h3 { margin: 5px 0; font-size: 1.2rem; }
-        .card p { font-size: 0.9rem; color: #555; line-height: 1.5; height: 45px; overflow: hidden; }
+        .container { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .company-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; position: relative; }
+        .company-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .verified-badge { position: absolute; top: 10px; left: 10px; background: #00b4d8; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
+        .card-content { padding: 20px; }
+        .card-content small { color: var(--gold); font-weight: bold; }
+        .card-content h3 { margin: 10px 0 5px; font-size: 1.25rem; color: var(--navy); }
+        .card-content p { color: #666; font-size: 0.9rem; margin-bottom: 15px; height: 40px; overflow: hidden; }
         
-        /* أزرار التواصل */
-        .actions { display: flex; gap: 10px; margin-top: 15px; }
-        .btn { flex: 1; padding: 10px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        /* الأزرار */
+        .card-actions { display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 12px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
         .btn-wa { background: #25d366; color: white; }
         .btn-call { background: var(--navy); color: white; }
 
         /* شريط التنقل السفلي */
-        .nav-bottom { position: fixed; bottom: 0; width: 100%; background: var(--navy); display: flex; justify-content: space-around; padding: 12px 0; border-top: 2px solid var(--gold); }
-        .nav-link { color: white; text-decoration: none; font-size: 0.8rem; text-align: center; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--navy); display: flex; justify-content: space-around; padding: 12px 0; border-top: 2px solid var(--gold); z-index: 2000; }
+        .nav-item { color: white; text-decoration: none; text-align: center; font-size: 0.75rem; }
 
-        /* إخفاء شريط جوجل المزعج */
-        .goog-te-banner-frame { display: none !important; }
-        body { top: 0px !important; }
         #google_translate_element { display: none; }
     </style>
 </head>
@@ -46,78 +57,100 @@
 
 <header>
     <a href="#" class="logo">ENG MARKET</a>
-    <button id="translate-btn" onclick="toggleLanguage()">English</button>
+    <button class="lang-btn" onclick="toggleLang()">English</button>
 </header>
-
-<div class="hero">
-    <h2 id="hero-title">أسعار مواد البناء والخدمات الهندسية</h2>
-</div>
-
-<div class="search-box">
-    <input type="text" id="mainSearch" placeholder="ابحث عن شركة، مصنع، أو خدمة..." onkeyup="filterCompanies()">
-</div>
 
 <div id="google_translate_element"></div>
 
-<div class="container" id="companiesGrid">
+<div class="ticker-wrap">
+    <div class="ticker">
+        <span class="ticker-item">🏗️ طن الحديد: $680</span>
+        <span class="ticker-item">🧱 متر الباطون: $85</span>
+        <span class="ticker-item">☀️ لوح طاقة 550W: $110</span>
+        <span class="ticker-item">🪵 خشب سويدي متر: $340</span>
+        <span class="ticker-item">🚿 أدوات صحية (خصم 20%)</span>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>أكبر تجمع هندسي في لبنان</h1>
+    <p>بحث واحد يوصلك بكافة المصانع والموردين</p>
+</div>
+
+<div class="search-box">
+    <input type="text" id="mainSearch" placeholder="ماذا يحتاج مشروعك اليوم؟ (حديد، عزل، تمديدات...)" onkeyup="search()">
+</div>
+
+<div class="categories">
+    <div class="cat-card" onclick="filter('حديد')"><span class="cat-icon">🏗️</span>حديد</div>
+    <div class="cat-card" onclick="filter('باطون')"><span class="cat-icon">🧱</span>باطون</div>
+    <div class="cat-card" onclick="filter('طاقة')"><span class="cat-icon">☀️</span>طاقة</div>
+    <div class="cat-card" onclick="filter('خشب')"><span class="cat-icon">🪵</span>أخشاب</div>
+    <div class="cat-card" onclick="filter('صحي')"><span class="cat-icon">🚿</span>أدوات صحية</div>
+    <div class="cat-card" onclick="filter('عزل')"><span class="cat-icon">💧</span>عزل ونش</div>
+    <div class="cat-card" onclick="filter('مقاولات')"><span class="cat-icon">🏢</span>مقاولات</div>
+</div>
+
+<div class="container" id="grid">
     </div>
 
-<div class="nav-bottom">
-    <a href="#" class="nav-link">🏠<br>الرئيسية</a>
-    <a href="tel:96170822806" class="nav-link">📞<br>اتصل بنا</a>
-    <a href="https://wa.me/96170822806" class="nav-link">💬<br>واتساب</a>
+<div class="bottom-nav">
+    <a href="#" class="nav-item">🏠<br>الرئيسية</a>
+    <a href="https://wa.me/96170822806" class="nav-item">📢<br>أضف إعلانك</a>
+    <a href="tel:96170822806" class="nav-item">📞<br>اتصل بنا</a>
 </div>
 
 <script>
-    const data = [
-        { name: "ميتالكو للحديد", cat: "حديد بناء", loc: "بيروت", phone: "96103761784", desc: "توفير كافة أنواع حديد التسليح والجسور بأفضل الأسعار." },
-        { name: "تكنو لايت", cat: "طاقة شمسية", loc: "الشمال", phone: "96170822806", desc: "حلول الطاقة المتجددة وتجهيز المشاريع الهندسية." },
-        { name: "خشب الجنوب", cat: "تجارة أخشاب", loc: "صيدا", phone: "96170822806", desc: "استيراد وتوريد كافة أنواع الخشب للمقاولات." },
-        { name: "باطون لبنان", cat: "باطون جاهز", loc: "جبل لبنان", phone: "96170822806", desc: "صب باطون جاهز مع فحوصات مخبرية دقيقة." }
+    const database = [
+        { n: "ميتالكو للحديد", c: "حديد", l: "بيروت", p: "96103761784", d: "توريد حديد سابك وكافة أنواع الجسور والمقاطع الحديدية." },
+        { n: "يونايتد كونكريت", c: "باطون", l: "الجنوب", p: "96170822806", d: "باطون جاهز عيار 250، 300، 350 مع خدمة المضخات." },
+        { n: "شمس لبنان للطاقة", c: "طاقة", l: "الشمال", p: "96170822806", d: "أنظمة طاقة شمسية متكاملة بأسعار المصنع مع الكفالة." },
+        { n: "أخشاب الصباح", c: "خشب", l: "بيروت", p: "96103761784", d: "خشب سويدي، لاتيه، وميلامين لكافة أعمال الديكور." },
+        { n: "سانيتا للمقاولات", c: "مقاولات", l: "جبل لبنان", p: "96170822806", d: "تنفيذ مشاريع تسليم مفتاح، عظم، وتشطيب سوبر ديلوكس." },
+        { n: "مؤسسة العزل الحديث", c: "عزل", l: "البقاع", p: "96170822806", d: "متخصصون في عزل الأسطح من النش والرطوبة بأحدث المواد." },
+        { n: "هيدرو برو للأدوات", c: "صحي", l: "صيدا", p: "96170822806", d: "أدوات صحية إيطالية وألمانية وتمديدات حرارية مخفية." },
+        { n: "الجنوب للستيل", c: "حديد", l: "صور", p: "96103761784", d: "تصنيع شبك حديد الأرضيات ولف حديد الأعمدة." }
     ];
 
-    function display(items) {
-        const grid = document.getElementById('companiesGrid');
-        grid.innerHTML = items.map(i => `
-            <div class="card">
-                <span class="category-tag">📍 ${i.loc} | ${i.cat}</span>
-                <h3>${i.name}</h3>
-                <p>${i.desc}</p>
-                <div class="actions">
-                    <a href="tel:${i.phone}" class="btn btn-call">اتصال</a>
-                    <a href="https://wa.me/${i.phone}" class="btn btn-wa">واتساب</a>
+    function render(data) {
+        document.getElementById('grid').innerHTML = data.map(i => `
+            <div class="company-card">
+                <div class="verified-badge">موثوق ✅</div>
+                <div class="card-content">
+                    <small>📍 ${i.l} | ${i.c}</small>
+                    <h3>${i.n}</h3>
+                    <p>${i.d}</p>
+                    <div class="card-actions">
+                        <a href="tel:${i.p}" class="btn btn-call">اتصال</a>
+                        <a href="https://wa.me/${i.p}" class="btn btn-wa">واتساب</a>
+                    </div>
                 </div>
             </div>
         `).join('');
     }
 
-    function filterCompanies() {
-        const term = document.getElementById('mainSearch').value.toLowerCase();
-        const filtered = data.filter(i => i.name.includes(term) || i.cat.includes(term));
-        display(filtered);
+    function search() {
+        const v = document.getElementById('mainSearch').value.toLowerCase();
+        render(database.filter(i => i.n.includes(v) || i.c.includes(v) || i.d.includes(v)));
     }
 
-    // نظام الترجمة
+    function filter(cat) {
+        render(database.filter(i => i.c.includes(cat)));
+    }
+
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({pageLanguage: 'ar', includedLanguages: 'en,ar'}, 'google_translate_element');
     }
 
-    function toggleLanguage() {
+    function toggleLang() {
         const select = document.querySelector('.goog-te-combo');
         if (select) {
-            const btn = document.getElementById('translate-btn');
-            if (btn.innerText === "English") {
-                select.value = 'en';
-                btn.innerText = "العربية";
-            } else {
-                select.value = 'ar';
-                btn.innerText = "English";
-            }
+            select.value = (select.value === 'en') ? 'ar' : 'en';
             select.dispatchEvent(new Event('change'));
         }
     }
 
-    window.onload = () => display(data);
+    window.onload = () => render(database);
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
