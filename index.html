@@ -1,197 +1,180 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENG MARKET PRO</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENG MARKET PRO | المنصة الهندسية الكبرى</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --main: #002f34; /* لون أوليكس العميق */
+            --accent: #ff6f00; /* لون التمييز */
+            --light: #f2f4f5;
+            --white: #fff;
+            --success: #25d366;
+        }
 
-<style>
-:root{
---main:#002f34;
---accent:#ff6f00;
---light:#f2f4f5;
---white:#fff;
-}
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--light); color: var(--main); padding-bottom: 70px; }
 
-body{
-margin:0;
-font-family:Segoe UI;
-background:var(--light);
-color:var(--main);
-}
+        /* 1. بورصة الأسعار الحية */
+        .ticker { background: #1a1a1a; color: #00ff00; padding: 10px 0; overflow: hidden; font-family: monospace; font-size: 0.85rem; }
+        .ticker-inner { display: flex; white-space: nowrap; animation: slide 40s linear infinite; }
+        .ticker-item { margin: 0 20px; }
+        .ticker-item span { color: var(--accent); }
+        @keyframes slide { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-header{
-background:#fff;
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-bottom:1px solid #ddd;
-}
+        /* 2. الهيدر */
+        header { background: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--main); text-decoration: none; }
+        .btn-lang { border: 1px solid var(--main); background: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; }
 
-.section{
-background:#fff;
-padding:20px;
-margin:15px;
-border-radius:6px;
-}
+        /* 3. شريط العروض (Hot Deals) */
+        .promo-bar { background: #fff3e0; color: #e65100; text-align: center; padding: 8px; font-weight: bold; font-size: 0.8rem; border-bottom: 1px dotted #ffcc80; }
 
-input,select,textarea{
-width:100%;
-padding:10px;
-margin:5px 0;
-}
+        /* 4. أيقونات التصنيفات */
+        .cats-bar { display: flex; overflow-x: auto; background: #fff; padding: 15px; gap: 20px; border-bottom: 1px solid #eee; scrollbar-width: none; }
+        .cat-btn { min-width: 70px; text-align: center; cursor: pointer; color: var(--main); transition: 0.3s; }
+        .cat-btn i { display: block; font-size: 1.4rem; margin-bottom: 5px; }
+        .cat-btn span { font-size: 0.75rem; font-weight: bold; }
+        .cat-btn:hover { color: var(--accent); }
 
-button{
-background:var(--main);
-color:#fff;
-padding:10px;
-border:none;
-cursor:pointer;
-}
+        /* 5. الأقسام والحاويات */
+        .container { padding: 15px; max-width: 1200px; margin: auto; }
+        .section-title { margin: 20px 0 10px; font-size: 1.1rem; border-right: 4px solid var(--accent); padding-right: 10px; }
+        
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .card { background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd; position: relative; }
+        .badge-verified { background: #00b4d8; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; position: absolute; top: 10px; left: 10px; }
+        
+        /* 6. المدخلات والأزرار */
+        .form-box { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-main { background: var(--main); color: #fff; border: none; padding: 12px 20px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        
+        .action-btns { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-call { flex: 1; border: 1px solid var(--main); color: var(--main); text-align: center; padding: 8px; text-decoration: none; border-radius: 4px; font-weight: bold; }
+        .btn-wa { flex: 1; background: var(--success); color: #fff; text-align: center; padding: 8px; text-decoration: none; border-radius: 4px; font-weight: bold; }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-gap:15px;
-margin-top:15px;
-}
-
-.card{
-background:#fff;
-padding:15px;
-border-radius:6px;
-box-shadow:0 3px 8px rgba(0,0,0,0.05);
-}
-
-.badge{
-background:var(--accent);
-color:#fff;
-padding:3px 6px;
-font-size:12px;
-border-radius:3px;
-}
-
-.slider{
-background:#ffe082;
-padding:15px;
-text-align:center;
-font-weight:bold;
-}
-
-</style>
+        /* 7. القائمة السفلية */
+        .nav-bottom { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 1000; }
+        .nav-item { color: var(--main); text-decoration: none; text-align: center; font-size: 0.7rem; }
+        .nav-item i { display: block; font-size: 1.3rem; margin-bottom: 3px; }
+        .nav-item.active { color: var(--accent); }
+    </style>
 </head>
 <body>
 
+<div class="ticker">
+    <div class="ticker-inner">
+        <div class="ticker-item">⛽ بنزين 95: <span>1,640,000 L.L</span></div>
+        <div class="ticker-item">🏗️ طن الحديد: <span>$685</span></div>
+        <div class="ticker-item">🔥 مازوت: <span>$14.50</span></div>
+        <div class="ticker-item">💰 ذهب (24k): <span>$78.42</span></div>
+        <div class="ticker-item">⚪ فضة: <span>$0.96</span></div>
+        <div class="ticker-item">🛢️ خام برنت: <span>$82.10</span></div>
+        <div class="ticker-item">🧱 إسمنت: <span>$8.15</span></div>
+    </div>
+</div>
+
 <header>
-<h2>ENG MARKET</h2>
-<button onclick="showSection('register')">تسجيل</button>
+    <a href="#" class="logo">ENG MARKET</a>
+    <button class="btn-lang">EN</button>
 </header>
 
-<div class="slider" id="adsSlider">
-إعلان مدفوع - هنا تظهر إعلانات الشركات
+<div class="promo-bar">✨ خصم 15% على معدات الطاقة الشمسية لمشاريع جبل لبنان!</div>
+
+<div class="cats-bar">
+    <div class="cat-btn" onclick="filter('حديد')"><i class="fas fa-bars-staggered"></i><span>حديد</span></div>
+    <div class="cat-btn" onclick="filter('باطون')"><i class="fas fa-truck-pickup"></i><span>باطون</span></div>
+    <div class="cat-btn" onclick="filter('كهرباء')"><i class="fas fa-bolt"></i><span>كهرباء</span></div>
+    <div class="cat-btn" onclick="filter('صحي')"><i class="fas fa-faucet"></i><span>صحي</span></div>
+    <div class="cat-btn" onclick="filter('عزل')"><i class="fas fa-droplet-slash"></i><span>عزل</span></div>
+    <div class="cat-btn" onclick="filter('معدات')"><i class="fas fa-tractor"></i><span>معدات</span></div>
+    <div class="cat-item"><i class="fas fa-recycle"></i><span>مستعمل</span></div>
 </div>
 
-<div class="section" id="register">
-<h3>تسجيل مستخدم</h3>
-<select id="userType">
-<option value="engineer">مهندس</option>
-<option value="contractor">مقاول</option>
-<option value="company">شركة</option>
-</select>
-<input type="text" id="name" placeholder="الاسم">
-<select id="region">
-<option>بيروت</option>
-<option>الشمال</option>
-<option>البقاع</option>
-<option>الجنوب</option>
-<option>جبل لبنان</option>
-</select>
-<select id="category">
-<option>حديد</option>
-<option>خشب</option>
-<option>بلاط</option>
-<option>دهان</option>
-<option>كهرباء</option>
-</select>
-<button onclick="registerUser()">تسجيل</button>
+<div class="container">
+    
+    <input type="text" id="mainSearch" placeholder="ابحث عن مورد، مقاول، أو مادة بناء..." onkeyup="search()">
+
+    <div class="section-title">تسجيل شركة جديدة</div>
+    <div class="form-box">
+        <input type="text" id="compName" placeholder="اسم الشركة">
+        <select id="compCat">
+            <option>حديد</option><option>باطون</option><option>كهرباء</option><option>صحي</option><option>مقاولات</option>
+        </select>
+        <input type="text" id="compPhone" placeholder="رقم الواتساب (961...)">
+        <button class="btn-main" onclick="addCompany()">إضافة الشركة فوراً</button>
+    </div>
+
+    <div class="section-title">الموردون الموثوقون</div>
+    <div class="card-grid" id="companiesGrid">
+        <div class="card">
+            <div class="badge-verified">موثق ✅</div>
+            <h3>ميتالكو للحديد</h3>
+            <p>بيروت - حديد تسليح وجسور</p>
+            <div class="action-btns">
+                <a href="tel:96103000000" class="btn-call">اتصال</a>
+                <a href="https://wa.me/96103000000" class="btn-wa">واتساب</a>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<div class="section">
-<h3>طلب عرض سعر</h3>
-<input type="text" id="product" placeholder="مثال: 5 طن حديد B500">
-<textarea id="details" placeholder="تفاصيل إضافية"></textarea>
-<button onclick="createRequest()">إرسال الطلب</button>
-</div>
-
-<div class="section">
-<h3>الشركات المطابقة</h3>
-<div class="grid" id="companiesList"></div>
-</div>
-
-<div class="section">
-<h3>العروض</h3>
-<div class="grid" id="offersList"></div>
+<div class="nav-bottom">
+    <a href="#" class="nav-item active"><i class="fas fa-home"></i>الرئيسية</a>
+    <a href="#" class="nav-item" style="color:var(--accent)"><i class="fas fa-plus-circle"></i>أضف إعلان</a>
+    <a href="#" class="nav-item"><i class="fas fa-file-invoice-dollar"></i>طلباتي</a>
+    <a href="#" class="nav-item"><i class="fas fa-user-circle"></i>حسابي</a>
 </div>
 
 <script>
+    let companies = JSON.parse(localStorage.getItem("eng_companies")) || [
+        {name: "يونايتد باطون", cat: "باطون", phone: "96170000000", loc: "صيدا"},
+        {name: "شمس للطاقة", cat: "كهرباء", phone: "96101000000", loc: "طرابلس"}
+    ];
 
-let users = JSON.parse(localStorage.getItem("users")) || [];
-let requests = [];
-let offers = [];
+    function renderCompanies(data) {
+        const grid = document.getElementById("companiesGrid");
+        grid.innerHTML = data.map(c => `
+            <div class="card">
+                <div class="badge-verified">موثق ✅</div>
+                <h3>${c.name}</h3>
+                <p>${c.loc || 'لبنان'} - ${c.cat}</p>
+                <div class="action-btns">
+                    <a href="tel:${c.phone}" class="btn-call">اتصال</a>
+                    <a href="https://wa.me/${c.phone}" class="btn-wa">واتساب</a>
+                </div>
+            </div>
+        `).join('');
+    }
 
-function registerUser(){
-let user={
-type:document.getElementById("userType").value,
-name:document.getElementById("name").value,
-region:document.getElementById("region").value,
-category:document.getElementById("category").value
-};
+    function addCompany() {
+        const name = document.getElementById("compName").value;
+        const cat = document.getElementById("compCat").value;
+        const phone = document.getElementById("compPhone").value;
+        if(name && phone) {
+            companies.push({name, cat, phone, loc: "مسجل حديثاً"});
+            localStorage.setItem("eng_companies", JSON.stringify(companies));
+            alert("تم إدراج شركتك بنجاح!");
+            renderCompanies(companies);
+        }
+    }
 
-users.push(user);
-localStorage.setItem("users",JSON.stringify(users));
-alert("تم التسجيل بنجاح");
-displayCompanies();
-}
+    function search() {
+        const q = document.getElementById("mainSearch").value.toLowerCase();
+        const filtered = companies.filter(c => c.name.toLowerCase().includes(q) || c.cat.includes(q));
+        renderCompanies(filtered);
+    }
 
-function displayCompanies(){
-let list=document.getElementById("companiesList");
-list.innerHTML="";
-users.filter(u=>u.type==="company").forEach(c=>{
-list.innerHTML+=`
-<div class="card">
-<h4>${c.name}</h4>
-<p>${c.category} - ${c.region}</p>
-<button onclick="makeOffer('${c.name}')">إرسال عرض</button>
-</div>
-`;
-});
-}
+    function filter(cat) {
+        const filtered = companies.filter(c => c.cat === cat);
+        renderCompanies(filtered);
+    }
 
-function createRequest(){
-let req={
-product:document.getElementById("product").value,
-details:document.getElementById("details").value
-};
-requests.push(req);
-alert("تم إرسال الطلب");
-}
-
-function makeOffer(company){
-let price=(Math.random()*1000+500).toFixed(0);
-offers.push({company,price});
-document.getElementById("offersList").innerHTML+=`
-<div class="card">
-<span class="badge">${company}</span>
-<h4>$${price}</h4>
-<button onclick="this.parentElement.remove()">اختيار العرض</button>
-</div>
-`;
-}
-
-displayCompanies();
-
+    // تشغيل عند التحميل
+    renderCompanies(companies);
 </script>
 
 </body>
