@@ -4,152 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eng Market Pro | المنصة الهندسية المتكاملة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --navy: #0d1b2a; --gold: #c5a059; --bg: #f4f7f9; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); padding-bottom: 80px; }
+        :root {
+            --navy: #0d1b2a;
+            --gold: #c5a059;
+            --light-bg: #f4f7f9;
+            --white: #ffffff;
+            --success: #25d366;
+            --dark-gray: #333;
+        }
+
+        /* تنسيقات عامة */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--light-bg); transition: 0.3s; padding-bottom: 70px; overflow-x: hidden; }
+        .dark-mode { --navy: #1b263b; --light-bg: #0d1b2a; --white: #1b263b; color: white; }
         
-        /* الهيدر */
-        header { background: var(--navy); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 1000; }
-        .logo { color: var(--gold); font-size: 1.6rem; font-weight: 900; text-decoration: none; }
-        .lang-btn { background: var(--gold); color: var(--navy); border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        /* 1. البورصة الشاملة (Ticker) */
+        .market-ticker { background: #1a1a1a; color: #00ff00; padding: 8px 0; overflow: hidden; position: sticky; top: 0; z-index: 1001; font-family: monospace; font-size: 0.85rem; border-bottom: 1px solid var(--gold); }
+        .ticker-content { display: flex; white-space: nowrap; animation: moveTicker 40s linear infinite; }
+        .ticker-item { margin: 0 25px; display: flex; gap: 8px; }
+        .ticker-item span { color: var(--gold); }
+        @keyframes moveTicker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* بورصة الأسعار اليومية (مثل IndiaMart) */
-        .ticker-wrap { background: #e9ecef; padding: 10px 0; border-bottom: 1px solid #ddd; overflow: hidden; }
-        .ticker { display: flex; white-space: nowrap; animation: ticker 30s linear infinite; }
-        .ticker-item { margin: 0 20px; font-size: 0.9rem; font-weight: bold; color: var(--navy); }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* 2. الهيدر وزر اللغة */
+        header { background: var(--navy); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: var(--gold); font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+        .header-tools { display: flex; gap: 15px; align-items: center; }
+        .btn-lang, .btn-dark { background: var(--gold); border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
-        /* منطقة البحث */
-        .hero { background: var(--navy); padding: 40px 5%; text-align: center; color: white; }
-        .search-box { max-width: 700px; margin: -30px auto 20px; position: relative; padding: 0 15px; }
-        #mainSearch { width: 100%; padding: 18px 25px; border-radius: 50px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-size: 1.1rem; outline: none; }
+        /* 3. شريط العروضات (Hot Deals) */
+        .hot-deals { background: var(--gold); color: var(--navy); text-align: center; padding: 5px; font-weight: bold; font-size: 0.9rem; }
 
-        /* الأقسام (تصميم أيقونات Olx) */
-        .categories { display: flex; overflow-x: auto; padding: 20px 5%; gap: 15px; background: white; }
-        .cat-card { min-width: 100px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .cat-card:hover { color: var(--gold); transform: scale(1.1); }
-        .cat-icon { font-size: 2rem; display: block; margin-bottom: 5px; }
-
-        /* قائمة الشركات */
-        .container { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-        .company-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; position: relative; }
-        .company-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .verified-badge { position: absolute; top: 10px; left: 10px; background: #00b4d8; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
-        .card-content { padding: 20px; }
-        .card-content small { color: var(--gold); font-weight: bold; }
-        .card-content h3 { margin: 10px 0 5px; font-size: 1.25rem; color: var(--navy); }
-        .card-content p { color: #666; font-size: 0.9rem; margin-bottom: 15px; height: 40px; overflow: hidden; }
+        /* 4. منطقة البحث والفلترة */
+        .hero { background: var(--navy); padding: 50px 5%; text-align: center; color: white; }
+        .search-area { max-width: 800px; margin: -30px auto 30px; padding: 0 20px; }
+        #mainSearch { width: 100%; padding: 18px 25px; border-radius: 50px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.15); font-size: 1.1rem; outline: none; }
         
-        /* الأزرار */
-        .card-actions { display: flex; gap: 10px; }
-        .btn { flex: 1; padding: 12px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        .btn-wa { background: #25d366; color: white; }
+        /* 5. أيقونات الخدمات (مثل Olx) */
+        .services-icons { display: flex; overflow-x: auto; padding: 20px 5%; gap: 20px; background: var(--white); scrollbar-width: none; }
+        .service-item { min-width: 85px; text-align: center; cursor: pointer; transition: 0.3s; color: var(--navy); }
+        .service-item:hover { transform: scale(1.1); color: var(--gold); }
+        .service-item i { font-size: 1.8rem; display: block; margin-bottom: 8px; color: var(--gold); }
+        .service-item span { font-size: 0.8rem; font-weight: bold; }
+
+        /* 6. شبكة الشركات والإعلانات */
+        .main-container { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        
+        /* كرت الشركة الاحترافي */
+        .company-card { background: var(--white); border-radius: 15px; overflow: hidden; position: relative; border: 1px solid #ddd; transition: 0.4s; }
+        .company-card:hover { box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .featured-tag { position: absolute; top: 10px; left: 10px; background: #ff9f1c; color: white; padding: 3px 10px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; }
+        .verified-check { color: #00b4d8; margin-right: 5px; }
+        .card-img { width: 100%; height: 160px; background: #eee center/cover; }
+        .card-body { padding: 20px; }
+        .price-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
+        .card-actions { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-action { flex: 1; padding: 12px; text-align: center; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.85rem; transition: 0.3s; }
+        .btn-wa { background: var(--success); color: white; }
         .btn-call { background: var(--navy); color: white; }
 
-        /* شريط التنقل السفلي */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--navy); display: flex; justify-content: space-around; padding: 12px 0; border-top: 2px solid var(--gold); z-index: 2000; }
-        .nav-item { color: white; text-decoration: none; text-align: center; font-size: 0.75rem; }
+        /* 7. القائمة السفلية */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--navy); display: flex; justify-content: space-around; padding: 12px 0; border-top: 3px solid var(--gold); z-index: 2000; }
+        .nav-link { color: white; text-decoration: none; text-align: center; font-size: 0.75rem; }
+        .nav-link i { display: block; font-size: 1.4rem; margin-bottom: 3px; color: var(--gold); }
 
+        /* 8. نظام التسجيل المنبثق (Modal) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 500px; text-align: center; }
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-submit { background: var(--gold); color: var(--navy); border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        /* إخفاء شريط جوجل الافتراضي */
         #google_translate_element { display: none; }
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
     </style>
 </head>
-<body>
+<body id="mainBody">
+
+<div class="market-ticker">
+    <div class="ticker-content">
+        <div class="ticker-item">⛽ بنزين (95): <span>1,650,000 L.L</span></div>
+        <div class="ticker-item">🔥 مازوت: <span>$14.50 / 20L</span></div>
+        <div class="ticker-item">💨 غاز: <span>980,000 L.L</span></div>
+        <div class="ticker-item">🏗️ حديد (طن): <span>$685</span></div>
+        <div class="ticker-item">🧱 إسمنت: <span>$8.20 / كيس</span></div>
+        <div class="ticker-item">💰 ذهب (24k): <span>$78.40/g</span></div>
+        <div class="ticker-item">⚪ فضة: <span>$0.95/g</span></div>
+        <div class="ticker-item">🛢️ برميل برنت: <span>$82.15</span></div>
+    </div>
+</div>
 
 <header>
     <a href="#" class="logo">ENG MARKET</a>
-    <button class="lang-btn" onclick="toggleLang()">English</button>
+    <div class="header-tools">
+        <button class="btn-dark" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
+        <button class="btn-lang" onclick="toggleLanguage()">English</button>
+    </div>
 </header>
 
-<div id="google_translate_element"></div>
-
-<div class="ticker-wrap">
-    <div class="ticker">
-        <span class="ticker-item">🏗️ طن الحديد: $680</span>
-        <span class="ticker-item">🧱 متر الباطون: $85</span>
-        <span class="ticker-item">☀️ لوح طاقة 550W: $110</span>
-        <span class="ticker-item">🪵 خشب سويدي متر: $340</span>
-        <span class="ticker-item">🚿 أدوات صحية (خصم 20%)</span>
-    </div>
-</div>
+<div class="hot-deals">🔥 عرض الأسبوع: خصم 20% على تمديدات الطاقة الشمسية لمشاريع الجنوب!</div>
 
 <div class="hero">
-    <h1>أكبر تجمع هندسي في لبنان</h1>
-    <p>بحث واحد يوصلك بكافة المصانع والموردين</p>
+    <h1>المنصة الهندسية المتكاملة في لبنان</h1>
+    <p>البورصة، الموردين، والمقاولين في مكان واحد</p>
 </div>
 
-<div class="search-box">
-    <input type="text" id="mainSearch" placeholder="ماذا يحتاج مشروعك اليوم؟ (حديد، عزل، تمديدات...)" onkeyup="search()">
+<div class="search-area">
+    <input type="text" id="mainSearch" placeholder="ابحث عن حديد، باطون، مهندس، أو معدات ثقيلة..." onkeyup="filterData()">
 </div>
 
-<div class="categories">
-    <div class="cat-card" onclick="filter('حديد')"><span class="cat-icon">🏗️</span>حديد</div>
-    <div class="cat-card" onclick="filter('باطون')"><span class="cat-icon">🧱</span>باطون</div>
-    <div class="cat-card" onclick="filter('طاقة')"><span class="cat-icon">☀️</span>طاقة</div>
-    <div class="cat-card" onclick="filter('خشب')"><span class="cat-icon">🪵</span>أخشاب</div>
-    <div class="cat-card" onclick="filter('صحي')"><span class="cat-icon">🚿</span>أدوات صحية</div>
-    <div class="cat-card" onclick="filter('عزل')"><span class="cat-icon">💧</span>عزل ونش</div>
-    <div class="cat-card" onclick="filter('مقاولات')"><span class="cat-icon">🏢</span>مقاولات</div>
+<div class="services-icons">
+    <div class="service-item" onclick="filterCat('حديد')"><i class="fas fa-bars-staggered"></i><span>حديد</span></div>
+    <div class="service-item" onclick="filterCat('باطون')"><i class="fas fa-truck-ramp-box"></i><span>باطون</span></div>
+    <div class="service-item" onclick="filterCat('كهرباء')"><i class="fas fa-bolt"></i><span>طاقة</span></div>
+    <div class="service-item" onclick="filterCat('عزل')"><i class="fas fa-droplet-slash"></i><span>عزل ونش</span></div>
+    <div class="service-item" onclick="filterCat('معدات')"><i class="fas fa-tractor"></i><span>معدات</span></div>
+    <div class="service-item" onclick="filterCat('مقاولات')"><i class="fas fa-helmet-safety"></i><span>مقاولات</span></div>
+    <div class="service-item" onclick="filterCat('مستعمل')"><i class="fas fa-recycle"></i><span>مستعمل</span></div>
 </div>
 
-<div class="container" id="grid">
+<div class="main-container" id="grid">
     </div>
 
 <div class="bottom-nav">
-    <a href="#" class="nav-item">🏠<br>الرئيسية</a>
-    <a href="https://wa.me/96170822806" class="nav-item">📢<br>أضف إعلانك</a>
-    <a href="tel:96170822806" class="nav-item">📞<br>اتصل بنا</a>
+    <a href="#" class="nav-link" onclick="location.reload()">
+        <i class="fas fa-house"></i>الرئيسية
+    </a>
+    <a href="#" class="nav-link" onclick="openModal()">
+        <i class="fas fa-plus-circle"></i>إضافة إعلان
+    </a>
+    <a href="https://wa.me/96170822806" class="nav-item nav-link">
+        <i class="fas fa-cart-flatbed"></i>طلباتي
+    </a>
+    <a href="#" class="nav-link" onclick="alert('قريباً: نظام تتبع الشحنات عبر الخريطة')">
+        <i class="fas fa-map-location-dot"></i>التتبع
+    </a>
 </div>
 
+<div class="modal" id="regModal">
+    <div class="modal-content">
+        <h3>تأسيس حساب شركة / إضافة إعلان</h3>
+        <p>قم بإضافة بياناتك ليتم عرضها للمهندسين فوراً</p>
+        <div class="form-group"><input type="text" placeholder="اسم الشركة أو الخدمة"></div>
+        <div class="form-group"><input type="text" placeholder="التصنيف (حديد، باطون...)"></div>
+        <div class="form-group"><input type="text" placeholder="رقم الواتساب"></div>
+        <div class="form-group"><input type="text" placeholder="المنطقة"></div>
+        <button class="btn-submit" onclick="closeModal()">إرسال للمراجعة والتفعيل</button>
+        <button onclick="closeModal()" style="margin-top:10px; background:none; border:none; cursor:pointer;">إغلاق</button>
+    </div>
+</div>
+
+<div id="google_translate_element"></div>
+
 <script>
+    // 8. قاعدة البيانات الشاملة (Initial Data)
     const database = [
-        { n: "ميتالكو للحديد", c: "حديد", l: "بيروت", p: "96103761784", d: "توريد حديد سابك وكافة أنواع الجسور والمقاطع الحديدية." },
-        { n: "يونايتد كونكريت", c: "باطون", l: "الجنوب", p: "96170822806", d: "باطون جاهز عيار 250، 300، 350 مع خدمة المضخات." },
-        { n: "شمس لبنان للطاقة", c: "طاقة", l: "الشمال", p: "96170822806", d: "أنظمة طاقة شمسية متكاملة بأسعار المصنع مع الكفالة." },
-        { n: "أخشاب الصباح", c: "خشب", l: "بيروت", p: "96103761784", d: "خشب سويدي، لاتيه، وميلامين لكافة أعمال الديكور." },
-        { n: "سانيتا للمقاولات", c: "مقاولات", l: "جبل لبنان", p: "96170822806", d: "تنفيذ مشاريع تسليم مفتاح، عظم، وتشطيب سوبر ديلوكس." },
-        { n: "مؤسسة العزل الحديث", c: "عزل", l: "البقاع", p: "96170822806", d: "متخصصون في عزل الأسطح من النش والرطوبة بأحدث المواد." },
-        { n: "هيدرو برو للأدوات", c: "صحي", l: "صيدا", p: "96170822806", d: "أدوات صحية إيطالية وألمانية وتمديدات حرارية مخفية." },
-        { n: "الجنوب للستيل", c: "حديد", l: "صور", p: "96103761784", d: "تصنيع شبك حديد الأرضيات ولف حديد الأعمدة." }
+        { id: 1, name: "ميتالكو للحديد", cat: "حديد", loc: "بيروت", phone: "96103761784", desc: "حديد تسليح عالي الجودة مع خدمة القص والثني.", featured: true, price: "$685/Ton" },
+        { id: 2, name: "الجنوب للباطون", cat: "باطون", loc: "صيدا", phone: "96170822806", desc: "باطون جاهز عيار 350 مع مضخات 42 متر.", queue: "3 شاحنات في الانتظار", verified: true },
+        { id: 3, name: "شمس للمقاولات", cat: "مقاولات", loc: "النبطية", phone: "96170822806", desc: "تنفيذ مشاريع سكنية - تسليم مفتاح.", featured: false },
+        { id: 4, name: "تكنو لايت", cat: "كهرباء", loc: "الشمال", phone: "96101000000", desc: "ألواح طاقة شمسية 550W بأسعار الجملة.", price: "$108/Panel" },
+        { id: 5, name: "ونش لبنان", cat: "معدات", loc: "جبل لبنان", phone: "96170822806", desc: "تأجير جرافات وكرينات بالساعة واليوم.", verified: true },
+        { id: 6, name: "مستعمل بلس", cat: "مستعمل", loc: "بيروت", phone: "96170822806", desc: "سقالات ومولدات مستعملة حالة ممتازة.", price: "أسعار تصفية" }
     ];
 
-    function render(data) {
-        document.getElementById('grid').innerHTML = data.map(i => `
+    // 9. وظيفة العرض (Render)
+    function render(items) {
+        const grid = document.getElementById('grid');
+        grid.innerHTML = items.map(i => `
             <div class="company-card">
-                <div class="verified-badge">موثوق ✅</div>
-                <div class="card-content">
-                    <small>📍 ${i.l} | ${i.c}</small>
-                    <h3>${i.n}</h3>
-                    <p>${i.d}</p>
+                ${i.featured ? '<div class="featured-tag">إعلان مميز</div>' : ''}
+                <div class="card-img" style="background-image: url('https://source.unsplash.com/random/400x200?industrial,construction,${i.id}')"></div>
+                <div class="card-body">
+                    <small>📍 ${i.loc} | ${i.cat}</small>
+                    <h3>${i.verified ? '<i class="fas fa-circle-check verified-check"></i>' : ''}${i.name}</h3>
+                    <div class="price-row">
+                        <span>${i.price || 'اطلب السعر'}</span>
+                        <span style="color:red; font-size:0.7rem;">${i.queue || ''}</span>
+                    </div>
+                    <p>${i.desc}</p>
                     <div class="card-actions">
-                        <a href="tel:${i.p}" class="btn btn-call">اتصال</a>
-                        <a href="https://wa.me/${i.p}" class="btn btn-wa">واتساب</a>
+                        <a href="tel:${i.phone}" class="btn-action btn-call"><i class="fas fa-phone"></i> اتصال</a>
+                        <a href="https://wa.me/${i.phone}" class="btn-action btn-wa"><i class="fab fa-whatsapp"></i> واتساب</a>
                     </div>
                 </div>
             </div>
         `).join('');
     }
 
-    function search() {
-        const v = document.getElementById('mainSearch').value.toLowerCase();
-        render(database.filter(i => i.n.includes(v) || i.c.includes(v) || i.d.includes(v)));
+    // 10. الفلترة والبحث
+    function filterData() {
+        const query = document.getElementById('mainSearch').value.toLowerCase();
+        const filtered = database.filter(i => i.name.includes(query) || i.cat.includes(query) || i.desc.includes(query));
+        render(filtered);
     }
 
-    function filter(cat) {
-        render(database.filter(i => i.c.includes(cat)));
+    function filterCat(cat) {
+        if(cat === 'الكل') return render(database);
+        render(database.filter(i => i.cat === cat));
+        window.scrollTo({top: 400, behavior: 'smooth'});
     }
 
+    // 11. وظائف الواجهة (UI)
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
+
+    function openModal() { document.getElementById('regModal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('regModal').style.display = 'none'; }
+
+    // 12. نظام الترجمة
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({pageLanguage: 'ar', includedLanguages: 'en,ar'}, 'google_translate_element');
     }
 
-    function toggleLang() {
-        const select = document.querySelector('.goog-te-combo');
-        if (select) {
-            select.value = (select.value === 'en') ? 'ar' : 'en';
-            select.dispatchEvent(new Event('change'));
+    function toggleLanguage() {
+        const combo = document.querySelector('.goog-te-combo');
+        if (combo) {
+            combo.value = (combo.value === 'en') ? 'ar' : 'en';
+            combo.dispatchEvent(new Event('change'));
         }
     }
 
+    // تشغيل الصفحة
     window.onload = () => render(database);
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
