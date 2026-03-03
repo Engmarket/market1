@@ -3,200 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eng Market | سوق المهندسين والمقاولين</title>
+    <title>Eng Market | سوق المهندسين</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* تصميم مستوحى من Olx - أبيض ناصع ورمادي خفيف */
-        :root {
-            --olx-teal: #002f34; /* اللون الكحلي المائل للأخضر الخاص بأوليكس */
-            --olx-bg: #ffffff;
-            --olx-gray: #f2f4f5;
-            --accent: #ff5252;
-        }
+        :root { --olx-teal: #002f34; --olx-gray: #f2f4f5; --white: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--olx-gray); color: var(--olx-teal); padding-bottom: 80px; }
 
-        body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            margin: 0; 
-            background-color: var(--olx-gray); 
-            color: var(--olx-teal);
-            padding-bottom: 80px;
-        }
-
-        /* 1. بورصة المواد والوقود (أبيض بخط غامق) */
-        .market-ticker { 
-            background: #fff; 
-            border-bottom: 1px solid #ddd;
-            padding: 12px 0; 
-            overflow: hidden; 
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        .ticker-content { display: flex; white-space: nowrap; animation: moveTicker 35s linear infinite; }
-        .ticker-item { margin: 0 25px; border-left: 2px solid #ddd; padding-left: 15px; }
+        /* 1. شريط البورصة العلوي */
+        .market-ticker { background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; overflow: hidden; font-weight: bold; }
+        .ticker-wrap { display: flex; white-space: nowrap; animation: moveTicker 40s linear infinite; }
+        .ticker-item { margin: 0 20px; font-size: 0.9rem; }
         .ticker-item span { color: #ff5252; }
         @keyframes moveTicker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* 2. الهيدر (أبيض ناصع) */
-        header { 
-            background: #ffffff; 
-            padding: 15px 5%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid #ddd;
-        }
-        .logo { font-size: 1.8rem; font-weight: 900; color: var(--olx-teal); text-decoration: none; }
-        .lang-btn { border: 2px solid var(--olx-teal); background: none; padding: 5px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        /* 2. الهيدر والعروض */
+        header { background: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+        .logo { font-size: 1.8rem; font-weight: 900; text-decoration: none; color: var(--olx-teal); }
+        .hot-deals { background: #fff8e1; color: #ff8f00; text-align: center; padding: 10px; font-weight: bold; border-bottom: 1px solid #ffe082; }
 
-        /* 3. شريط العروضات */
-        .hot-deals { background: #fff8e1; color: #ff8f00; text-align: center; padding: 8px; font-size: 0.85rem; font-weight: bold; border-bottom: 1px solid #ffe082; }
+        /* 3. منطقة البحث */
+        .search-area { background: #fff; padding: 30px 5%; text-align: center; border-bottom: 1px solid #ddd; }
+        #mainSearch { width: 100%; max-width: 850px; padding: 15px; border: 2px solid var(--olx-teal); border-radius: 4px; font-size: 1.1rem; }
 
-        /* 4. منطقة البحث (مثل Olx) */
-        .search-section { background: #ffffff; padding: 30px 5%; border-bottom: 1px solid #ddd; text-align: center; }
-        #mainSearch { 
-            width: 100%; 
-            max-width: 900px; 
-            padding: 18px; 
-            border: 2px solid var(--olx-teal); 
-            border-radius: 4px; 
-            font-size: 1.1rem; 
-            outline: none;
-        }
+        /* 4. الأيقونات */
+        .cats { display: flex; overflow-x: auto; padding: 20px 5%; gap: 25px; background: #fff; }
+        .cat-card { text-align: center; min-width: 80px; cursor: pointer; }
+        .cat-card i { font-size: 1.6rem; display: block; margin-bottom: 8px; color: var(--olx-teal); }
+        .cat-card span { font-size: 0.85rem; font-weight: bold; }
 
-        /* 5. أيقونات الخدمات الدائرية */
-        .categories { 
-            display: flex; 
-            overflow-x: auto; 
-            padding: 20px 5%; 
-            gap: 25px; 
-            background: #fff; 
-            justify-content: flex-start;
-        }
-        .cat-item { text-align: center; min-width: 80px; cursor: pointer; color: var(--olx-teal); }
-        .cat-item i { font-size: 1.6rem; display: block; margin-bottom: 10px; opacity: 0.8; }
-        .cat-item span { font-size: 0.85rem; font-weight: bold; }
-
-        /* 6. كروت الشركات (تصميم نظيف) */
-        .grid { padding: 25px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { 
-            background: #fff; 
-            border: 1px solid #ddd; 
-            border-radius: 4px; 
-            overflow: hidden; 
-            transition: 0.3s;
-            position: relative;
-        }
-        .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: #bbb; }
-        .verified-tag { position: absolute; top: 10px; left: 10px; background: #34a853; color: #fff; padding: 3px 8px; border-radius: 3px; font-size: 0.7rem; font-weight: bold; }
-        .card-body { padding: 15px; }
-        .card-body h3 { margin: 5px 0; font-size: 1.3rem; }
-        .card-body p { color: #666; font-size: 0.9rem; line-height: 1.4; height: 40px; margin-bottom: 15px; }
+        /* 5. شبكة الإعلانات والشركات */
+        .grid { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 15px; position: relative; transition: 0.3s; }
+        .card:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .card-tag { position: absolute; top: 10px; left: 10px; background: #34a853; color: #fff; padding: 3px 8px; font-size: 0.7rem; border-radius: 3px; }
         
-        /* 7. أزرار الفعل */
-        .card-btns { display: flex; gap: 10px; }
-        .btn { flex: 1; padding: 12px; text-align: center; border-radius: 4px; font-weight: bold; text-decoration: none; font-size: 0.9rem; }
-        .btn-wa { background: #25d366; color: white; }
+        .actions { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { flex: 1; padding: 10px; text-align: center; border-radius: 4px; text-decoration: none; font-weight: bold; }
+        .btn-wa { background: #25d366; color: #fff; }
         .btn-call { border: 2px solid var(--olx-teal); color: var(--olx-teal); }
 
-        /* 8. القائمة السفلية الثابتة */
-        .bottom-nav { 
-            position: fixed; 
-            bottom: 0; 
-            width: 100%; 
-            background: #fff; 
-            display: flex; 
-            justify-content: space-around; 
-            padding: 12px 0; 
-            border-top: 1px solid #ddd; 
-            z-index: 1000;
-        }
-        .nav-link { color: var(--olx-teal); text-decoration: none; text-align: center; font-size: 0.75rem; font-weight: bold; }
-        .nav-link i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
-
-        /* 9. قسم إضافة إعلان (الأحمر المميز) */
-        .add-btn { color: #ff5252 !important; }
+        /* 6. الملاحة السفلية */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; border-top: 1px solid #ddd; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000; }
+        .nav-item { color: var(--olx-teal); text-decoration: none; font-size: 0.75rem; text-align: center; }
+        .nav-item i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
 <div class="market-ticker">
-    <div class="ticker-content">
+    <div class="ticker-wrap">
         <div class="ticker-item">⛽ بنزين: <span>1,650,000 L.L</span></div>
-        <div class="ticker-item">🏗️ طن الحديد: <span>$685</span></div>
-        <div class="ticker-item">🔥 مازوت (20L): <span>$14.50</span></div>
-        <div class="ticker-item">💨 غاز: <span>980,000 L.L</span></div>
-        <div class="ticker-item">💰 ذهب (24k): <span>$78.40</span></div>
-        <div class="ticker-item">⚪ فضة: <span>$0.95</span></div>
-        <div class="ticker-item">🛢️ بترول (برنت): <span>$82.15</span></div>
-        <div class="ticker-item">🧱 إسمنت (كيس): <span>$8.20</span></div>
+        <div class="ticker-item">🏗️ حديد (طن): <span>$685</span></div>
+        <div class="ticker-item">🧱 مازوت (20L): <span>$14.50</span></div>
+        <div class="ticker-item">💰 ذهب: <span>$78.40</span></div>
+        <div class="ticker-item">🧱 إسمنت: <span>$8.20</span></div>
     </div>
 </div>
 
 <header>
     <a href="#" class="logo">ENG MARKET</a>
-    <button class="lang-btn">English</button>
+    <button style="border:1px solid var(--olx-teal); background:none; padding:5px 15px; cursor:pointer;">English</button>
 </header>
 
 <div class="hot-deals">✨ عروض اليوم: خصم 20% لجميع المهندسين المسجلين حديثاً!</div>
 
-<div class="search-section">
-    <input type="text" id="mainSearch" placeholder="ماذا تبحث اليوم؟ (حديد، باطون، أدوات صحية...)" onkeyup="search()">
+<div class="search-area">
+    <input type="text" id="mainSearch" placeholder="ابحث عن حديد، باطون، أدوات صحية...">
 </div>
 
-<div class="categories">
-    <div class="cat-item"><i class="fas fa-bars-staggered"></i><span>حديد</span></div>
-    <div class="cat-item"><i class="fas fa-truck-pickup"></i><span>باطون</span></div>
-    <div class="cat-item"><i class="fas fa-bolt"></i><span>كهرباء</span></div>
-    <div class="cat-item"><i class="fas fa-faucet"></i><span>صحي</span></div>
-    <div class="cat-item"><i class="fas fa-shield-halved"></i><span>عزل ونش</span></div>
-    <div class="cat-item"><i class="fas fa-hammer"></i><span>مقاولات</span></div>
-    <div class="cat-item"><i class="fas fa-recycle"></i><span>مستعمل</span></div>
+<div class="cats">
+    <div class="cat-card"><i class="fas fa-bars-staggered"></i><span>حديد</span></div>
+    <div class="cat-card"><i class="fas fa-truck-pickup"></i><span>باطون</span></div>
+    <div class="cat-card"><i class="fas fa-bolt"></i><span>كهرباء</span></div>
+    <div class="cat-card"><i class="fas fa-faucet"></i><span>صحي</span></div>
+    <div class="cat-card"><i class="fas fa-shield-halved"></i><span>عزل ونش</span></div>
 </div>
 
-<div class="grid" id="mainGrid">
+<div class="grid">
     <div class="card">
-        <div class="verified-tag">موثوق ✅</div>
-        <div class="card-body">
-            <small>📍 بيروت | حديد</small>
-            <h3>ميتالكو للحديد</h3>
-            <p>توريد حديد سابك وكافة مستلزمات التسليح بأسعار الجملة.</p>
-            <div class="card-btns">
-                <a href="#" class="btn btn-call">اتصال</a>
-                <a href="#" class="btn btn-wa">واتساب</a>
-            </div>
+        <div class="card-tag">موثوق ✅</div>
+        <small>📍 بيروت | حديد</small>
+        <h3>ميتالكو للحديد</h3>
+        <p>توريد حديد سابك وكافة مستلزمات التسليح بأسعار الجملة.</p>
+        <div class="actions">
+            <a href="tel:96103761784" class="btn btn-call">اتصال</a>
+            <a href="https://wa.me/96103761784" class="btn btn-wa">واتساب</a>
         </div>
     </div>
-    
     <div class="card">
-        <div class="card-body">
-            <small>📍 صيدا | باطون</small>
-            <h3>يونايتد كونكريت</h3>
-            <p>باطون جاهز عيار 300 مع خدمة المضخة لجميع المناطق.</p>
-            <div class="card-btns">
-                <a href="#" class="btn btn-call">اتصال</a>
-                <a href="#" class="btn btn-wa">واتساب</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <small>📍 طرابلس | طاقة</small>
-            <h3>تكنو لايت للكهرباء</h3>
-            <p>أنظمة طاقة شمسية وتمديدات كهربائية منزلية وصناعية.</p>
-            <div class="card-btns">
-                <a href="#" class="btn btn-call">اتصال</a>
-                <a href="#" class="btn btn-wa">واتساب</a>
-            </div>
+        <small>📍 صيدا | باطون</small>
+        <h3>يونايتد كونكريت</h3>
+        <p>باطون جاهز عيار 300 مع خدمة المضخة لجميع المناطق.</p>
+        <div class="actions">
+            <a href="tel:96170822806" class="btn btn-call">اتصال</a>
+            <a href="https://wa.me/96170822806" class="btn btn-wa">واتساب</a>
         </div>
     </div>
 </div>
 
 <div class="bottom-nav">
-    <a href="#" class="nav-link"><i class="fas fa-home"></i>الرئيسية</a>
-    <a href="#" class="nav-link add-btn"><i class="fas fa-plus-circle"></i>أضف إعلان</a>
-    <a href="#" class="nav-link"><i class="fas fa-user-gear"></i>حسابي</a>
-    <a href="#" class="nav-link"><i class="fas fa-phone"></i>اتصل بنا</a>
+    <a href="#" class="nav-item"><i class="fas fa-home"></i>الرئيسية</a>
+    <a href="#" class="nav-item" style="color:#ff5252"><i class="fas fa-plus-circle"></i>أضف إعلان</a>
+    <a href="#" class="nav-item"><i class="fas fa-user"></i>حسابي</a>
+    <a href="#" class="nav-item"><i class="fas fa-phone"></i>اتصل بنا</a>
 </div>
 
 </body>
