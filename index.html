@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ENG MARKET - السوق الهندسي</title>
+<title>ENG MARKET</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
 
 :root{
@@ -22,40 +23,79 @@ color:var(--main);
 padding-bottom:90px;
 }
 
+.container{
+max-width:1100px;
+margin:auto;
+padding:15px;
+}
+
+/* Header */
 header{
 background:#fff;
+padding:15px;
 display:flex;
 justify-content:space-between;
-padding:15px 5%;
+align-items:center;
 border-bottom:1px solid #ddd;
 }
 
-.logo{font-weight:900;font-size:1.5rem;}
+.logo{
+font-weight:900;
+font-size:1.6rem;
+}
 
+/* Ads Slider */
+.slider{
+height:180px;
+overflow:hidden;
+position:relative;
+background:#ffe082;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:1.3rem;
+font-weight:bold;
+}
+
+/* Discount Bar */
+.discount-bar{
+background:var(--accent);
+color:#fff;
+padding:8px;
+text-align:center;
+font-weight:bold;
+}
+
+/* Sections */
+.section{
+background:#fff;
+padding:20px;
+margin-top:15px;
+border-radius:6px;
+}
+
+/* Inputs */
 select,input,textarea{
 width:100%;
 padding:10px;
 margin:6px 0;
+border:1px solid #ccc;
 }
 
 button{
 background:var(--main);
 color:#fff;
-border:none;
 padding:10px;
+border:none;
 cursor:pointer;
 }
 
-.section{
-padding:20px 5%;
-background:#fff;
-margin-bottom:10px;
-}
-
+/* Grid */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
 gap:15px;
+margin-top:15px;
 }
 
 .card{
@@ -73,6 +113,7 @@ font-size:12px;
 border-radius:3px;
 }
 
+/* Bottom Nav */
 .bottom-nav{
 position:fixed;
 bottom:0;
@@ -104,46 +145,57 @@ margin-bottom:4px;
 
 <header>
 <div class="logo">ENG MARKET</div>
+<div>السوق الهندسي الأول في لبنان</div>
 </header>
 
-<!-- إنشاء طلب عرض سعر -->
+<div class="slider">
+مساحة إعلانية مدفوعة للشركات ⭐
+</div>
+
+<div class="discount-bar">
+🔥 شركة البلاط المتحدة: حسم 30% على بلاط 60×60 | شركة الأخشاب الحديثة: حسم 20%
+</div>
+
+<div class="container">
+
 <div class="section">
 <h3>طلب عرض سعر</h3>
 
 <select id="region">
 <option value="">اختر المحافظة</option>
-<option value="بيروت">بيروت</option>
-<option value="الشمال">الشمال</option>
-<option value="البقاع">البقاع</option>
-<option value="الجنوب">الجنوب</option>
-<option value="جبل لبنان">جبل لبنان</option>
+<option>بيروت</option>
+<option>الشمال</option>
+<option>البقاع</option>
+<option>الجنوب</option>
+<option>جبل لبنان</option>
 </select>
 
 <select id="category">
 <option value="">اختر الفئة</option>
-<option value="حديد">حديد</option>
-<option value="خشب">خشب</option>
-<option value="كهرباء">كهرباء</option>
-<option value="صحي">صحي</option>
+<option>حديد</option>
+<option>خشب</option>
+<option>بلاط</option>
+<option>دهان</option>
+<option>كهرباء</option>
 </select>
 
 <input type="text" id="product" placeholder="مثال: 5 طن حديد B500">
 
 <textarea id="details" placeholder="تفاصيل إضافية..."></textarea>
 
-<button onclick="sendRequest()">إرسال الطلب للشركات</button>
+<button onclick="sendRequest()">إرسال الطلب</button>
 </div>
 
-<!-- قائمة الشركات -->
 <div class="section">
 <h3>الشركات المطابقة</h3>
 <div class="grid" id="companiesList"></div>
 </div>
 
-<!-- العروض -->
 <div class="section">
 <h3>العروض المستلمة</h3>
 <div class="grid" id="offersList"></div>
+</div>
+
 </div>
 
 <div class="bottom-nav">
@@ -155,14 +207,14 @@ margin-bottom:4px;
 
 <script>
 
-/* بيانات تجريبية (لاحقاً تصبح من قاعدة بيانات) */
+/* يمكنك لاحقاً إضافة 250 شركة هنا */
 
 const companies = [
-{name:"شركة ميتالكو",category:"حديد",region:"بيروت"},
+{name:"ميتالكو",category:"حديد",region:"بيروت"},
 {name:"حديد الشمال",category:"حديد",region:"الشمال"},
-{name:"خشب البقاع",category:"خشب",region:"البقاع"},
-{name:"كهرباء الجنوب",category:"كهرباء",region:"الجنوب"},
-{name:"حديد لبنان",category:"حديد",region:"جبل لبنان"}
+{name:"خشب لبنان",category:"خشب",region:"جبل لبنان"},
+{name:"بلاط المتحدة",category:"بلاط",region:"البقاع"},
+{name:"دهانات الجنوب",category:"دهان",region:"الجنوب"}
 ];
 
 function sendRequest(){
